@@ -5,7 +5,15 @@ compiler:
   - gcc
 env:
   global:
-    - PATCHSET_NDNCXX=master
+    - PATCHSET_NDNCXX=3546,15
+    - PATCHSET_NFD=master
+    - PATCHSET_NLSR=master
+    - PATCHSET_NDNTOOLS=master
+    - PATCHSET_NDNS=master
+    - PATCHSET_REPONG=master
+    - PATCHSET_CHRONOSYNC=master
+    - PATCHSET_TRAFFICGEN=master
+    - PATCHSET_INTEG=master
   matrix:
     - PROJECT=NFD
     - PROJECT=NFD-benchmark
@@ -19,8 +27,14 @@ env:
     - PROJECT=ndn-traffic-generator
 install:
   - ./deps_ndn-cxx.sh
-  - if [[ -f ./deps_${PROJECT}.sh ]]; then ./deps_${PROJECT}.sh; fi
+  - 'if [[ -f ./deps_${PROJECT}.sh ]]; then ./deps_${PROJECT}.sh; fi'
 before_script:
   - ./build_ndn-cxx.sh
 script:
-  - ./build_${PROJECT}.sh
+  - './build_${PROJECT}.sh'
+notifications:
+  email:
+    recipients:
+      - aa@cs.ucla.edu
+    on_success: always
+    on_failure: always
